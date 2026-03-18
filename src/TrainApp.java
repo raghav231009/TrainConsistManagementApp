@@ -16,7 +16,7 @@ public class TrainApp {
         train.add("Cargo");
         train.add("Guard");
 
-        // محاولة إدخال مكرر (duplicate)
+
         train.add("Sleeper"); // will be ignored
 
         System.out.println("Final Train Formation:");
