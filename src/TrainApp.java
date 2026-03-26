@@ -11,7 +11,7 @@ class GoodsBogie {
     }
 }
 
-public class Main {
+public class TrainApp {
     public static void main(String[] args) {
         List<GoodsBogie> goodsBogies = Arrays.asList(
                 new GoodsBogie("Rectangular", "Coal"),
