@@ -1,22 +1,5 @@
 import java.util.*;
-import java.util.stream.Collectors;
-
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public String toString() {
-        return name + " -> " + capacity;
-    }
-}
-
-import java.util.*;
-        import java.util.stream.*;
+import java.util.stream.*;
 
 class Bogie {
     String name;
