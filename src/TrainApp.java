@@ -11,7 +11,7 @@ class Bogie {
     }
 }
 
-public class Main {
+public class TrainApp {
     public static void main(String[] args) {
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
