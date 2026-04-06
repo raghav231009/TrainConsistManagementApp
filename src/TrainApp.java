@@ -1,28 +1,103 @@
-import java.util.HashMap;
-import java.util.Map;
+// ---------------- UC14 (reuse) ----------------
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
 
-public class TrainApp {
+class PassengerBogie {
+    private String type;
+    private int capacity;
+
+    public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+        if (capacity <= 0) {
+            throw new InvalidCapacityException("Capacity must be greater than zero");
+        }
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+}
+
+// ---------------- UC15 START ----------------
+
+// Custom Runtime Exception
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
+// Goods Bogie Class
+class GoodsBogie {
+    private String shape;   // Rectangular / Cylindrical
+    private String cargo;   // Petroleum / Food / etc.
+
+    public GoodsBogie(String shape) {
+        this.shape = shape;
+        this.cargo = null;
+    }
+
+    public String getShape() {
+        return shape;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    // CORE LOGIC: try-catch-finally inside method
+    public void assignCargo(String cargoType) {
+        try {
+            // Safety validation
+            if (shape.equalsIgnoreCase("Rectangular") &&
+                    cargoType.equalsIgnoreCase("Petroleum")) {
+
+                throw new CargoSafetyException(
+                        "Unsafe cargo: Petroleum cannot be assigned to Rectangular bogie"
+                );
+            }
+
+            // Safe assignment
+            this.cargo = cargoType;
+            System.out.println("Cargo assigned successfully: " + cargoType);
+
+        } catch (CargoSafetyException e) {
+            // Handle exception internally (IMPORTANT)
+            System.out.println("Error: " + e.getMessage());
+
+        } finally {
+            // MUST always execute
+            System.out.println("Cargo assignment attempt completed.");
+        }
+    }
+}
+
+// ---------------- MAIN ----------------
+public class Main {
     public static void main(String[] args) {
 
-        System.out.println("==================================");
-        System.out.println("UC6 - Map Bogie to Capacity (HashMap)");
-        System.out.println("==================================\n");
+        // Safe case
+        GoodsBogie bogie1 = new GoodsBogie("Cylindrical");
+        bogie1.assignCargo("Petroleum");
 
-        // Create HashMap
-        HashMap<String, Integer> bogieCapacity = new HashMap<>();
+        System.out.println();
 
-        // Insert values (as per output)
-        bogieCapacity.put("First Class", 24);
-        bogieCapacity.put("Cargo", 120);
-        bogieCapacity.put("Sleeper", 72);
-        bogieCapacity.put("AC Chair", 56);
+        // Unsafe case
+        GoodsBogie bogie2 = new GoodsBogie("Rectangular");
+        bogie2.assignCargo("Petroleum");
 
-        // Display output
-        System.out.println("Bogie Capacity Details:");
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        System.out.println();
 
-        System.out.println("\nUC6 bogie-capacity mapping completed...");
+        // Program should CONTINUE
+        GoodsBogie bogie3 = new GoodsBogie("Rectangular");
+        bogie3.assignCargo("Food");
     }
 }
